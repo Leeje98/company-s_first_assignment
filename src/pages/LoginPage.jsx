@@ -128,7 +128,7 @@ export default function LoginPage() {
       setPassowrod('')
     } else if( idValue === ID && password === PW) {
       alert('로그인 되었습니다')
-      window.open('/', '_self')
+      window.open('/main', '_self')
     }
   } // 로그인버튼 클릭시 조건 확인 -> 조건만족시 페이지 이동
 
