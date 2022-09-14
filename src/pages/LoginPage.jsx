@@ -90,9 +90,7 @@ const Button = styled.div`
 
 
 export default function LoginPage() {
-  const [ idValue, setIdVelue ] = useState({
-    value: ''
-  })
+  const [ idValue, setIdVelue ] = useState('')
   const [ password, setPassowrod ] = useState('')
 
   const handleChangeId = (event) => {
@@ -116,18 +114,23 @@ export default function LoginPage() {
   } // 비밀번호 입력란 한글 입력 불가 기능 // input password 고유기능으로 한글은 입력 되지 않는듯하다
 
 
-  // function loginBtnClick() {
   const loginBtnClick = () => {
     
     const ID = 'bpns1234'
     const PW = 'bpns1234!!'
+    // 임의로 등록한 회원정보 - 로그인 기능 테스트에 적용
 
-    if(idValue.value !== ID ) {
+    if( idValue !== ID ) {
       alert('존재하지 않는 아이디입니다')
-      setIdVelue.value = ''
-      setIdVelue.focus()
-    } 
-  } // 로그인버튼 클릭시 조건 확인
+      setIdVelue('')
+    } else if( idValue === ID && password !== PW) {
+      alert('패스워드를 확인해주세요')
+      setPassowrod('')
+    } else if( idValue === ID && password === PW) {
+      alert('로그인 되었습니다')
+      window.open('/', '_self')
+    }
+  } // 로그인버튼 클릭시 조건 확인 -> 조건만족시 페이지 이동
 
   return (
     <Container>
@@ -141,9 +144,7 @@ export default function LoginPage() {
       <InputBox>
         <Name>비밀번호</Name> 
         <Input id='password' name='passoword' placeholder='비밀번호를 입력해주세요'
-                // type='password' 
-                type='text' 
-                value={password} onChange={handleChangePw}/>
+                type='password' value={password} onChange={handleChangePw}/>
       </InputBox>
 
       <CheckInput

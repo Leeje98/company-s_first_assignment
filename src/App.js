@@ -3,9 +3,9 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
-import LandingPage from "./pages/LandingPage";
 import JoinPage from "./pages/JoinPage";
 import LoginPage from "./pages/LoginPage";
+import MainPage from './pages/MainPage';
 
 
 function App() {
@@ -13,9 +13,9 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<LandingPage/>} />
+          <Route path='/' element={<LoginPage/>} />
           <Route path='/join' element={<JoinPage />} />
-          <Route path='/login' element={<LoginPage />} />
+          <Route path='/main' element={<MainPage />} />
         </Routes>
       </BrowserRouter>
       
