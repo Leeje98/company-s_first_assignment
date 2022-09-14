@@ -1,7 +1,7 @@
-import React from 'react';
-// import { Link as ReactRouterDomLink } from 'react-router-dom';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
 
 const Container = styled.div`
   width: 90%;
@@ -67,7 +67,6 @@ const Button = styled.div`
   font-weight: 700;
   line-height: 49px;
   display: block;
-  width: 49%;
   height: 49px;
   margin: 16px 0 7px;
   cursor: pointer;
@@ -86,29 +85,65 @@ const Button = styled.div`
   `} */
 `;
 
-const StyledLink = styled(Link)`
-	width: 100%;
-`;
+
 
 
 
 export default function LoginPage() {
+  const [ idValue, setIdVelue ] = useState({
+    value: ''
+  })
+  const [ password, setPassowrod ] = useState('')
+
+  const handleChangeId = (event) => {
+    const IdCheck = /[(ㄱ-ㅎ가-힣ㅏ-ㅣ),(\s)]/g;
+    
+    if (IdCheck.test(event.target.value)) {
+      alert('한글과 공백은 입력할 수 없습니다')
+    } else {
+      setIdVelue(event.target.value);
+    }
+  }  // ID 입력란 공백과 한글 입력 불가 기능
+
+  const handleChangePw = (event) => {
+    const IdCheck = /[(ㄱ-ㅎ가-힣ㅏ-ㅣ)]/g;
+    
+    if (IdCheck.test(event.target.value)) {
+      alert('한글은 입력할 수 없습니다')
+    } else {
+      setPassowrod(event.target.value);
+    }
+  } // 비밀번호 입력란 한글 입력 불가 기능 // input password 고유기능으로 한글은 입력 되지 않는듯하다
+
+
+  // function loginBtnClick() {
+  const loginBtnClick = () => {
+    
+    const ID = 'bpns1234'
+    const PW = 'bpns1234!!'
+
+    if(idValue.value !== ID ) {
+      alert('존재하지 않는 아이디입니다')
+      setIdVelue.value = ''
+      setIdVelue.focus()
+    } 
+  } // 로그인버튼 클릭시 조건 확인
+
   return (
     <Container>
       <Title>제품 관리 시스템</Title>
       <InputBox>
         <Name>아이디</Name> 
-        <Input id='id' name='id' placeholder='아이디를 입력해주세요' />
+        <Input id='id' name='id' placeholder='아이디를 입력해주세요' 
+               type='text' value={idValue} onChange={handleChangeId} />
       </InputBox>
       
       <InputBox>
         <Name>비밀번호</Name> 
-        <Input
-        id='password'
-        name='passoword'
-        type='password'
-        placeholder='비밀번호를 입력해주세요'
-        />
+        <Input id='password' name='passoword' placeholder='비밀번호를 입력해주세요'
+                // type='password' 
+                type='text' 
+                value={password} onChange={handleChangePw}/>
       </InputBox>
 
       <CheckInput
@@ -119,12 +154,12 @@ export default function LoginPage() {
       <label htmlFor="autoLogin">자동로그인</label>
       
       <ButtonBox>
-        <Button>로그인</Button>
-        {/* <Link to='/join' style={{ textDecoration: 'none', width: 'auto' }}><Button>회원가입</Button></Link> */}
-        <StyledLink to='/join' style={{ textDecoration: 'none' }}><Button>회원가입</Button></StyledLink>
+        <Button style={{ flex: 1, marginRight: '20px' }} onClick={loginBtnClick}>로그인</Button>
+        <Link className='joinBtn' to='/join' style={{ textDecoration: 'none', flex: 1 }}>
+          <Button style={{ width: '100%' }}>회원가입</Button>
+        </Link>
       </ButtonBox>
     
     </Container>
-    // <div>안녕하세요</div>
   )
 }
