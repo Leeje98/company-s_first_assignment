@@ -60,6 +60,15 @@ const Input = styled.input`
   box-sizing: border-box;
 `;
 
+const Guide = styled.p`
+  font-size: 12px;
+  text-align: end;
+  height: 20px;
+  margin: none;
+  display: none;
+`
+
+
 
 
 const TextBox = styled.textarea`
@@ -114,6 +123,7 @@ export default function JoinPage() {
   // 임의로 등록한 회원 ID - ID 중복테스트에 적용
 
   const handleChangeId = (event) => {
+    
     setUserId(event.target.value);
   }  // ID 입력 반영
 
@@ -163,7 +173,7 @@ export default function JoinPage() {
     } else if ( password !== passwordCK ) {
       alert('비밀번호를 다시 확인해주세요')
       setPassowrodCK('')
-      PWchInputEl.current.focus() 
+      PWchInputEl.current.focus()  
       return; // 비밀번호 확인 일치 확인
     } else {
       alert('가입을 환영합니다!!')
@@ -180,6 +190,8 @@ export default function JoinPage() {
           <Input id='id' name='id' ref={IDInputEl}  placeholder='대소문자 구분없이 숫자+영어 조합으로 8자 이상 설정해주세요'
                type='text' value={userId} onChange={handleChangeId} />
       </InputBox>
+      <p style={{fontSize:'12px', textAlign:'end', height:'20px', margin:'none', display:'none'}}>대소문자 구분없이 숫자+영어 조합으로 8자 이상 설정해주세요</p>
+      <Guide>대소문자 구분없이 숫자+영어 조합으로 8자 이상 설정해주세요</Guide>
       
       <InputBox>
         <Name>패스워드</Name> 
