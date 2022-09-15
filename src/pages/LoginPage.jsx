@@ -3,14 +3,24 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 
+
+const Wrap = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 const Container = styled.div`
   width: 90%;
-  margin: 200px auto 0;
+  /* margin: 200px auto 0; */
   padding: 20px;
   @media screen and (min-width:1025px) {
       width: 400px;
+      margin-bottom: 150px;
     }
-`;
+`
 
 const Title = styled.h1`
   text-align: center;
@@ -22,7 +32,7 @@ const InputBox = styled.div`
   height: 60px;
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  padding: 10px 0;
   box-sizing: border-box;
   /* border: 1px solid #333; */
 `
@@ -111,7 +121,8 @@ export default function LoginPage() {
     } else {
       setPassowrod(event.target.value);
     }
-  } // 비밀번호 입력란 한글 입력 불가 기능 // input password 고유기능으로 한글은 입력 되지 않는듯하다
+  } // 비밀번호 입력란 한글 입력 불가 기능 
+    // input:type password 고유기능으로도 한글은 입력 되지 않는듯하다
 
 
   const loginBtnClick = () => {
@@ -121,8 +132,9 @@ export default function LoginPage() {
     // 임의로 등록한 회원정보 - 로그인 기능 테스트에 적용
 
     if( idValue !== ID ) {
-      alert('존재하지 않는 아이디입니다')
+      alert('아이디를 확인해주세요')
       setIdVelue('')
+      setPassowrod('')
     } else if( idValue === ID && password !== PW) {
       alert('패스워드를 확인해주세요')
       setPassowrod('')
@@ -133,6 +145,7 @@ export default function LoginPage() {
   } // 로그인버튼 클릭시 조건 확인 -> 조건만족시 페이지 이동
 
   return (
+    <Wrap>
     <Container>
       <Title>제품 관리 시스템</Title>
       <InputBox>
@@ -157,10 +170,11 @@ export default function LoginPage() {
       <ButtonBox>
         <Button style={{ flex: 1, marginRight: '20px' }} onClick={loginBtnClick}>로그인</Button>
         <Link className='joinBtn' to='/join' style={{ textDecoration: 'none', flex: 1 }}>
-          <Button style={{ width: '100%' }}>회원가입</Button>
+          <Button style={{ width: '100%' }} >회원가입</Button>
         </Link>
       </ButtonBox>
     
     </Container>
+    </Wrap>
   )
 }
