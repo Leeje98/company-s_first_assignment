@@ -33,10 +33,17 @@ const Title = styled.h1`
 const InputBox = styled.div`
   width: 100%;
   height: 60px;
-  display: flex;
-  justify-content: space-between;
   padding: 35px 0;
   box-sizing: border-box;
+  /* border: 1px solid #333; */
+`
+
+const InputInnerBox = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 60px;
   /* border: 1px solid #333; */
 `
 
@@ -50,26 +57,25 @@ const Name = styled.p`
 `
 
 const Input = styled.input`
-  position: relative;
   overflow: hidden;
   width: calc(100% - 100px);
   height: 40px;
-  padding: 5px 39px 5px 11px;
+  /* padding: 5px 39px 5px 11px; */
   border: solid 1px #333;
   background: #fff;
   box-sizing: border-box;
 `;
 
-const Guide = styled.p`
+const Guide = styled.label`
   font-size: 12px;
   text-align: end;
+  width: 100%;
   height: 20px;
   margin: none;
-  display: none;
+  position: absolute;
+  bottom: -2px;
+  color: gray;
 `
-
-
-
 
 const TextBox = styled.textarea`
   width: 99%;
@@ -118,18 +124,21 @@ export default function JoinPage() {
   const IDInputEl = useRef(null)
   const PWInputEl = useRef(null)
   const PWchInputEl = useRef(null)
+  const IDInputElLabel = useRef(null)
+  const PWInputElLabel = useRef(null)
 
   const ID = 'bpns1234'
   // 임의로 등록한 회원 ID - ID 중복테스트에 적용
 
   const handleChangeId = (event) => {
-    
+    IDInputElLabel.current.style = "display:block;"
     setUserId(event.target.value);
   }  // ID 입력 반영
 
 
   const handleChangePw = (event) => {
-      setPassowrod(event.target.value);
+    PWInputElLabel.current.style = "display:block;"
+    setPassowrod(event.target.value);
   } // 비밀번호 입력 반영
 
 
@@ -186,22 +195,30 @@ export default function JoinPage() {
     <Container>
       <Title>회원가입</Title>
       <InputBox>
-        <Name>아이디</Name>
-          <Input id='id' name='id' ref={IDInputEl}  placeholder='대소문자 구분없이 숫자+영어 조합으로 8자 이상 설정해주세요'
-               type='text' value={userId} onChange={handleChangeId} />
+        <InputInnerBox>
+          <Name>아이디</Name>
+            <Input id='id' name='id' ref={IDInputEl}  
+                // placeholder='대소문자 구분없이 숫자+영어 조합으로 8자 이상 설정해주세요'
+                type='text' value={userId} onChange={handleChangeId} />
+            <Guide htmlFor='id' ref={IDInputElLabel} >숫자+영어 조합으로 8자 이상 설정해주세요</Guide>
+        </InputInnerBox>
       </InputBox>
-      <p style={{fontSize:'12px', textAlign:'end', height:'20px', margin:'none', display:'none'}}>대소문자 구분없이 숫자+영어 조합으로 8자 이상 설정해주세요</p>
-      <Guide>대소문자 구분없이 숫자+영어 조합으로 8자 이상 설정해주세요</Guide>
       
       <InputBox>
-        <Name>패스워드</Name> 
-        <Input id='password' name='passoword' ref={PWInputEl} placeholder='숫자+영어+특수문자 조합으로 8자 이상 설정해주세요'
-                type='password' value={password} onChange={handleChangePw} />
+        <InputInnerBox>
+          <Name>패스워드</Name> 
+          <Input id='password' name='passoword' ref={PWInputEl} 
+                  // placeholder='숫자+영어+특수문자 조합으로 8자 이상 설정해주세요'
+                  type='password' value={password} onChange={handleChangePw} />
+          <Guide htmlFor='id' ref={PWInputElLabel} >숫자+영어+특수문자 조합으로 8자 이상 설정해주세요</Guide>
+        </InputInnerBox>
       </InputBox>
       <InputBox>
-        <Name>패스워드확인</Name> 
-        <Input id='passowordCheck' name='passowordCheck' ref={PWchInputEl}
-                type='password' value={passwordCK} onChange={handleChangePwCK} />
+        <InputInnerBox>
+          <Name>패스워드확인</Name> 
+          <Input id='passowordCheck' name='passowordCheck' ref={PWchInputEl}
+                  type='password' value={passwordCK} onChange={handleChangePwCK} />
+        </InputInnerBox>
       </InputBox>
 
 

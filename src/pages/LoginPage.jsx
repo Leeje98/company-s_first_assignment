@@ -24,7 +24,7 @@ const Container = styled.div`
 
 const Title = styled.h1`
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 100px;
 `
 
 const InputBox = styled.div`
@@ -136,7 +136,7 @@ export default function LoginPage() {
       setIdVelue('')
       setPassowrod('')
     } else if( idValue === ID && password !== PW) {
-      alert('패스워드를 확인해주세요')
+      alert('패스워드가 맞지 않습니다')
       setPassowrod('')
     } else if( idValue === ID && password === PW) {
       alert('로그인 되었습니다')
