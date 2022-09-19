@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -102,6 +103,9 @@ const Button = styled.div`
 export default function LoginPage() {
   const [ idValue, setIdVelue ] = useState('')
   const [ password, setPassowrod ] = useState('')
+  const IDinput = useRef(null)
+  const PWinput = useRef(null)
+  
 
   const handleChangeId = (event) => {
     const IdCheck = /[(ㄱ-ㅎ가-힣ㅏ-ㅣ),(\s)]/g;
@@ -135,9 +139,11 @@ export default function LoginPage() {
       alert('아이디를 확인해주세요')
       setIdVelue('')
       setPassowrod('')
+      IDinput.current.focus()
     } else if( idValue === ID && password !== PW) {
       alert('패스워드가 맞지 않습니다')
       setPassowrod('')
+      PWinput.current.focus()
     } else if( idValue === ID && password === PW) {
       alert('로그인 되었습니다')
       window.open('/main', '_self')
@@ -150,13 +156,13 @@ export default function LoginPage() {
       <Title>제품 관리 시스템</Title>
       <InputBox>
         <Name>아이디</Name> 
-        <Input id='id' name='id' placeholder='아이디를 입력해주세요' 
+        <Input id='id' name='id' placeholder='아이디를 입력해주세요' ref={IDinput}
                type='text' value={idValue} onChange={handleChangeId} />
       </InputBox>
       
       <InputBox>
         <Name>비밀번호</Name> 
-        <Input id='password' name='passoword' placeholder='비밀번호를 입력해주세요'
+        <Input id='password' name='passoword' placeholder='비밀번호를 입력해주세요' ref={PWinput}
                 type='password' value={password} onChange={handleChangePw}/>
       </InputBox>
 
