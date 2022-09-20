@@ -3,9 +3,9 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
-import JoinPage from "./pages/JoinPage";
-import LoginPage from "./pages/LoginPage";
-import MainPage from './pages/MainPage';
+import JoinPage from "./components/JoinPage";
+import LoginPage from "./components/LoginPage";
+import MainPage from './components/MainPage';
 
 
 function App() {
