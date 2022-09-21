@@ -1,7 +1,7 @@
 import React from 'react'
 import './MainPage.css'
 import styled from 'styled-components'
-import { useRef, forwardRef, useImperativeHandle, useState } from 'react'
+import { useRef, forwardRef, useImperativeHandle } from 'react'
 
 const ModalBg = styled.div`
   width: 100%;
@@ -55,69 +55,22 @@ const Title = styled.div`
 const CreateButton = styled.button`
   position: absolute;
   bottom: 10px;
-  right: 10px;
+  /* right: 10px; */
   background-color: #3f8aec;
   border: none;
   color: white;
-  width: 60px;
-  height: 30px;
+  width: 70px;
+  height: 40px;
 `
 
 
 
-// export default function CreateUser({ productID, name, produce, registration, detail, manager, onChange, onCreate }) {
-export default function CreateUser({ productID, name, produce, registration, detail, manager, onChange }) {
-  const [ inputs, setInputs ] = useState({
-    productID: '', 
-    name: '',
-    produce: '',
-    registration: '',
-    detail: '',
-    manager: ''
-  })
-  // const { productID, name, produce, registration, detail, manager } = inputs;
-
+export default function CreateUser({ productID, name, produce, registration, detail, manager, onChange, onCreate, onNewClose }) {
   const ProductIDInput = useRef(null)
   const NameInput = useRef(null)
   const ProduceInput = useRef(null)
   const RegistrationInput = useRef(null)
-
-  const nextId = useRef(5);
-    const onCreate = () => {
-      // 나중에 구현 할 배열에 항목 추가하는 로직
-
-      const Date = /^(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/
-
-      if( !Date.test(ProduceInput.current.value)) {
-        alert('날짜를 형식에 맞게 입력해주세요')
-        ProduceInput.current.focus()
-        return;
-      } else {
-        const user = {
-          id: nextId.current,
-          productID, 
-          name,
-          produce,
-          registration,
-          detail,
-          manager
-        }   
-        // setUsers([...users, user]) // 1. ...스프레드 연산자 사용 //{ 기존배열, 추가한배열요소(인듯) }
-        // setUsers(users.concat(user))  // 2. concat 사용
-
-        setInputs({
-          productID: '', 
-          name: '',
-          produce: '',
-          registration: '',
-          detail: '',
-          manager: ''
-        })
-
-        nextId.current += 1;
-        // setModal(false)
-      }////////////////////
-    }
+  
 
   return (
     <>
@@ -194,7 +147,8 @@ export default function CreateUser({ productID, name, produce, registration, det
             />
           </InputBox>
           
-          <CreateButton onClick={onCreate}>등록</CreateButton>
+          <CreateButton onClick={onNewClose} style={{ left: '5px'}}>취소</CreateButton>
+          <CreateButton onClick={onCreate} style={{ right: '5px'}}>등록</CreateButton>
         </InnerModal>
       </CreateModal>
     </>

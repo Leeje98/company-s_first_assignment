@@ -8,7 +8,9 @@ import { useState } from 'react'
 
 
 export default function MainPage() {
-  const [ modal, setModal ] = useState(false)
+
+  const [ newModal, setNewModal ] = useState(false)  // 신규 모달창 상태관리
+
   const [ inputs, setInputs ] = useState({
     productID: '', 
     name: '',
@@ -24,7 +26,6 @@ export default function MainPage() {
       ...inputs,
       [ name ]: value
     })
-    setModal(false)
   }
 
   const [ users, setUsers ] = useState([
@@ -68,15 +69,23 @@ export default function MainPage() {
 
 
     const nextId = useRef(5);
+    const onNewClose = () => {
+      setNewModal(false)
+    }
     const onCreate = () => {
       // 나중에 구현 할 배열에 항목 추가하는 로직
 
       const Date = /^(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/
+      const IdCk = /^(?=.*?[A-Z])(?=.*?[0-9]).{12,12}$/
 
-      if( !Date.test(inputs.produce)) {
+      if((inputs.productID) === '' || (inputs.name) === '' ) {
+        alert('제품ID와 제품명은 필수 입력입니다')
+      } else if( !IdCk.test(inputs.productID)){
+        alert('제품ID를 올바르게 입력해주세요 \n(숫자, 영어 대문자 조합 12자리)')
+      } else if( !Date.test(inputs.produce) && (inputs.produce !== '') ) {
         alert('날짜를 형식에 맞게 입력해주세요')
-        inputs.produce.focus()
-        return;
+      } else if( !Date.test(inputs.registration) && (inputs.registration !== '') ) {
+        alert('등록일자를 형식에 맞게 입력해주세요')
       } else{
         const user = {
           id: nextId.current,
@@ -100,15 +109,15 @@ export default function MainPage() {
         })
 
         nextId.current += 1;
-        setModal(false)
-      }////////////////////
+        setNewModal(false)
+      }
     }
 
     
     return (
       <>
       <div className='wrap'>
-        { modal === true ? 
+        { newModal === true ? 
         <CreateUser
           productID={productID}
           name={name}
@@ -118,11 +127,25 @@ export default function MainPage() {
           manager={manager}
           onChange={onChange}
           onCreate={onCreate} 
+          onNewClose={onNewClose}
         />
        : null }
+       {/* { newModal === true ? 
+        <CreateUser
+          productID={productID}
+          name={name}
+          produce={produce}
+          registration={registration} 
+          detail={detail}
+          manager={manager}
+          onChange={onChange}
+          onCreate={onCreate} 
+          onClose={onClose}
+        />
+       : null } */}
         <h1 className='userTitle'>제품 리스트</h1>
         <button className='newBtn'
-          onClick={()=>{setModal(true)}}
+          onClick={()=>{setNewModal(true)}}
         >신규</button>
         <section className='userOuter'>
           <ul className='product_user'>

@@ -34,7 +34,7 @@ export default function MainPage() {
         name: '제품명01',
         produce: '2022-09-01',
         registration: '2022-09-01',
-        detail: "상세설명01 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, quod!",
+        detail: '상세설명',
         manager: '홍길동'
       },
       {
@@ -43,7 +43,7 @@ export default function MainPage() {
         name: '제품명02',
         produce: '2022-09-02',
         registration: '2022-09-02',
-        detail: '상세설명02 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed minima quisquam quia.',
+        detail: '상세설명',
         manager: '홍길동'
       },
       {
@@ -52,7 +52,7 @@ export default function MainPage() {
         name: '제품명03',
         produce: '2022-09-03',
         registration: '2022-09-03',
-        detail: '상세설명03 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolor, quis corrupti.',
+        detail: '상세설명',
         manager: '홍길동'
       },
       {
@@ -61,7 +61,7 @@ export default function MainPage() {
         name: '제품명04',
         produce: '2022-09-04',
         registration: '2022-09-04',
-        detail: '상세설명04 Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi.',
+        detail: '상세설명',
         manager: '홍길동'
       },
     ])
@@ -134,9 +134,9 @@ export default function MainPage() {
           onClick={()=>{setModal(true)}}
         >신규</button>
         <section className='userOuter'>
-          <div className='product_user'>
+          <ul className='product_user'>
             <UserList users={users} />
-          </div>
+          </ul>
         </section>
       </div>
       </>
