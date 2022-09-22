@@ -48,7 +48,7 @@ const InputBox = styled.div`
 
 const Title = styled.div`
   width: 100px;
-  font-size: 18px;
+  /* font-size: 18px; */
   line-height: 30px;
 `
 
@@ -64,15 +64,11 @@ const Button = styled.button`
 `
 
 
-export default function UserList({ users, props }) {
+export default function UserList({ users, onRemove }) {
 
   
   const [showModal, setShowModal] = useState(false);
   const [activeObject, setActiveObject] = useState(null);
-
-  const onRemove = ( ) => {
-    
-  }
 
   function getClass(index) {
     return index === activeObject?.id ? "active" : "inactive";
@@ -80,7 +76,7 @@ export default function UserList({ users, props }) {
 
   // here className can not be "inactive" since Modal always shows activeObject
   // 여기서 className은 Modal이 항상 activeObject를 표시하기 때문에 "비활성"일 수 없습니다.
-  const Modal = ({ object: { productID, name, produce, registration, detail, manager, onRemove } }) => (
+  const Modal = ({ object: { id, productID, name, produce, registration, detail, manager, onRemove } }) => (
     <div id="productModal" className="active">
       <ModalBg></ModalBg>
       <CreateModal>
@@ -105,7 +101,7 @@ export default function UserList({ users, props }) {
         </InputBox>
         <InputBox>
           <Title>상세설명 : </Title>
-          <div className='inputstyle' style={{}}>{detail}</div>
+          <div className='inputstyle Textarea'>{detail}</div>
         </InputBox>
         <InputBox>
           <Title>등록자 : </Title>
@@ -113,8 +109,13 @@ export default function UserList({ users, props }) {
         </InputBox>
       </ul>
       <Button style={{ left:0 }}>수정</Button>
-      {/* <button onClick={() => onRemove(user.id)}>삭제</button> */}
-      <Button className='removeBtn' onClick={() => onRemove(users.id)}>삭제</Button>
+      <Button className='removeBtn' onClick={() => {
+        console.log('삭제 요청');
+        console.log(id);
+
+        onRemove(id)
+        setShowModal(false)
+        }}>삭제</Button>
       <Button style={{ right:0 }} onClick={() => setShowModal(false)}>확인</Button>
       </InnerModal>
       </CreateModal>
@@ -130,7 +131,8 @@ export default function UserList({ users, props }) {
           <li
             key={id}
             onClick={() => {
-              setActiveObject({ id, productID, name, produce, registration, detail, manager, onChange });
+              console.log(onRemove)
+              setActiveObject({ id, productID, name, produce, registration, detail, manager, onChange, onRemove });
               setShowModal(true);
             }}
             className={getClass(id)}
@@ -148,6 +150,14 @@ export default function UserList({ users, props }) {
                   <Title>제조일자 : </Title>
                   <div className='inputstyle'>{produce}</div>
                 </li>
+
+                {/* <button 
+              // className='removeBtn' 
+              onClick={() => {
+                  onRemove(users.id)
+                  // setShowModal(false)
+                  }}>삭제</button> */}
+
                 <li>
                   <Title>등록일자 : </Title>
                   <div className='inputstyle'>{registration}</div>
