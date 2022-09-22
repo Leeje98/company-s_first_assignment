@@ -44,7 +44,7 @@ export default function MainPage() {
         produce: '2022-09-02',
         registration: '2022-09-02',
         detail: '상세설명02 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed minima quisquam quia.',
-        manager: '홍길동'
+        manager: '아인슈타인'
       },
       {
         id: 3,
@@ -53,7 +53,7 @@ export default function MainPage() {
         produce: '2022-09-03',
         registration: '2022-09-03',
         detail: '상세설명03 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolor, quis corrupti.',
-        manager: '홍길동'
+        manager: '엘렌워커'
       },
       {
         id: 4,
@@ -62,7 +62,7 @@ export default function MainPage() {
         produce: '2022-09-04',
         registration: '2022-09-04',
         detail: '상세설명04 Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi.',
-        manager: '홍길동'
+        manager: '윤동주'
       },
     ])
 
@@ -112,6 +112,12 @@ export default function MainPage() {
       }
     }
 
+    const onRemove = (id) => {
+      // user.id 가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듬
+      // = user.id 가 id 인 것을 제거함
+      setUsers(users.filter(user => user.id !== id))
+    }
+
     
     return (
       <>
@@ -135,7 +141,10 @@ export default function MainPage() {
         >신규</button>
         <section className='userOuter'>
           <div className='product_user'>
-            <UserList users={users} />
+            <UserList 
+              users={users} 
+              onRemove={onRemove}
+            />
           </div>
         </section>
       </div>

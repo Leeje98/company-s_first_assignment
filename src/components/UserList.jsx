@@ -1,12 +1,78 @@
 import React, { useState } from 'react'
 import './MainPage.css'
+import styled from 'styled-components';
 
 
-export default function UserList({ users }) {
+const ModalBg = styled.div`
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: gray;
+  opacity: 0.7;
+  z-index: 1;
+`
 
-    /////
+const CreateModal = styled.div`
+  position: absolute;
+  background-color: white;
+  width: calc(100% - 80px);
+  height: calc(100vh - 60px);
+  margin: 30px 40px;
+  top: 0;
+  left: 0;
+  padding: 30px;
+  box-sizing: border-box;
+  z-index: 2;
+`
+
+const InnerModal = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`
+
+const NewTitle = styled.h2`
+  text-align: center;
+  font-weight: 500;
+  font-size: 27px;
+  margin-bottom: 50px;
+`
+
+const InputBox = styled.div`
+  display: flex;
+  /* justify-content: space-between; */
+  margin: 10px 0;
+`
+
+const Title = styled.div`
+  width: 100px;
+  font-size: 18px;
+  line-height: 30px;
+`
+
+const Button = styled.button`
+  position: absolute;
+  bottom: 10px;
+  /* right: 10px; */
+  background-color: #3f8aec;
+  border: none;
+  color: white;
+  width: 70px;
+  height: 40px;
+`
+
+
+export default function UserList({ users, props }) {
+
+  
   const [showModal, setShowModal] = useState(false);
   const [activeObject, setActiveObject] = useState(null);
+
+  const onRemove = ( ) => {
+    
+  }
 
   function getClass(index) {
     return index === activeObject?.id ? "active" : "inactive";
@@ -14,41 +80,44 @@ export default function UserList({ users }) {
 
   // here className can not be "inactive" since Modal always shows activeObject
   // 여기서 className은 Modal이 항상 activeObject를 표시하기 때문에 "비활성"일 수 없습니다.
-  const Modal = ({ object: { productID, name, produce, registration, detail, manager } }) => (
+  const Modal = ({ object: { productID, name, produce, registration, detail, manager, onRemove } }) => (
     <div id="productModal" className="active">
-      This is modal
-      <h3>제품 정보</h3>
-      <hr/>
+      <ModalBg></ModalBg>
+      <CreateModal>
+      <InnerModal>
+      <NewTitle>제품 정보</NewTitle>
       <ul className='info_user'>
-        <li>
-          <div className='title'>제품ID : </div>
+        <InputBox>
+          <Title>제품ID : </Title>
           <div className='inputstyle'>{productID}</div>
-        </li>
-        <li>
-          <div className='title'>제품명 : </div>
+        </InputBox>
+        <InputBox>
+          <Title>제품명 : </Title>
           <div className='inputstyle'>{name}</div>
-        </li>
-        <li>
-          <div className='title'>제조일자 : </div>
+        </InputBox>
+        <InputBox>
+          <Title>제조일자 : </Title>
           <div className='inputstyle'>{produce}</div>
-        </li>
-        <li>
-          <div className='title'>등록일자 : </div>
+        </InputBox>
+        <InputBox>
+          <Title>등록일자 : </Title>
           <div className='inputstyle'>{registration}</div>
-        </li>
-        <li>
-          <div className='title'>상세설명 : </div>
-          <div className='inputstyle'>{detail}</div>
-        </li>
-        <li>
-          <div className='title'>등록자 : </div>
+        </InputBox>
+        <InputBox>
+          <Title>상세설명 : </Title>
+          <div className='inputstyle' style={{}}>{detail}</div>
+        </InputBox>
+        <InputBox>
+          <Title>등록자 : </Title>
           <div className='inputstyle'>{manager}</div>
-        </li>
+        </InputBox>
       </ul>
-      <hr/>
-      <button>수정</button>
-      <button>삭제</button>
-      <button onClick={() => setShowModal(false)}>모달창 닫기</button>
+      <Button style={{ left:0 }}>수정</Button>
+      {/* <button onClick={() => onRemove(user.id)}>삭제</button> */}
+      <Button className='removeBtn' onClick={() => onRemove(users.id)}>삭제</Button>
+      <Button style={{ right:0 }} onClick={() => setShowModal(false)}>확인</Button>
+      </InnerModal>
+      </CreateModal>
     </div>
   );
     /////
@@ -57,30 +126,30 @@ export default function UserList({ users }) {
   return (
     <>
       <ul className="list-menu">
-        {users.map(({ id, productID, name, produce, registration, detail, manager, onChange, onCreate, onClose }) => (
+        {users.map(({ id, productID, name, produce, registration, detail, manager, onChange }) => (
           <li
             key={id}
             onClick={() => {
-              setActiveObject({ id, productID, name, produce, registration, detail, manager, onChange, onCreate, onClose });
+              setActiveObject({ id, productID, name, produce, registration, detail, manager, onChange });
               setShowModal(true);
             }}
             className={getClass(id)}
           >
               <ul className='info_user'>
                 <li>
-                  <div className='title'>제품ID : </div>
+                  <Title>제품ID : </Title>
                   <div className='inputstyle'>{productID}</div>
                 </li>
                 <li>
-                  <div className='title'>제품명 : </div>
+                  <Title>제품명 : </Title>
                   <div className='inputstyle'>{name}</div>
                 </li>
                 <li>
-                  <div className='title'>제조일자 : </div>
+                  <Title>제조일자 : </Title>
                   <div className='inputstyle'>{produce}</div>
                 </li>
                 <li>
-                  <div className='title'>등록일자 : </div>
+                  <Title>등록일자 : </Title>
                   <div className='inputstyle'>{registration}</div>
                 </li>
                 {/* 리스트에 노출되는 항목들로, 상세설명과 등록자 제외 */}

@@ -1,7 +1,7 @@
 import React from 'react'
 import './MainPage.css'
 import styled from 'styled-components'
-import { useRef, forwardRef, useImperativeHandle } from 'react'
+import { useRef } from 'react'
 
 const ModalBg = styled.div`
   width: 100%;

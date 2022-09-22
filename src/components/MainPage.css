@@ -31,7 +31,7 @@ li { list-style: none; }
   /* z-index: 0; */
 }
 
-.product_user {
+.userOuter {
   width: 100%;
   height: calc( 100vh - 101px );
   border-top: 1px solid #333;
@@ -39,7 +39,7 @@ li { list-style: none; }
   overflow-y: scroll;
 }
 
-.product_user>li {
+.info_user {
   border: 1px solid #333;
   padding: 10px;
   margin: 10px 0;
@@ -52,7 +52,6 @@ li { list-style: none; }
 
 .info_user>li .title {
   width: 100px;
-  /* background-color: gray; */
 }
 
 .info_user>li .inputstyle {
@@ -70,4 +69,13 @@ li { list-style: none; }
   width: calc(100% - 110px);
   box-sizing: border-box;
   padding: 5px;
+}
+
+
+
+
+
+.removeBtn {
+  left: 50%;
+  transform: translateX(-50%)
 }
