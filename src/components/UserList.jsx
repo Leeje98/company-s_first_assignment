@@ -64,51 +64,151 @@ const Button = styled.button`
 `
 
 
-export default function UserList({ users, onRemove }) {
+export default function UserList({ users, onRemove, onUpdate }) {
 
   
-  const [showModal, setShowModal] = useState(false);
-  const [activeObject, setActiveObject] = useState(null);
+  const [showModal, setShowModal] = useState(false);           // 모달창이 보이고 안보이는 상태관리
+  const [activeObject, setActiveObject] = useState(null);      // 모달창에 들어갈 리스트 내용 요소
+
+  const [editing, setEditing] = useState(false)                // 수정모드에 진입했는지 여부 (수정버튼 클릭 시)
+  const [name, setName] = useState('')
+  const [produce, setProduce] = useState('')
+  const [registration , setRegistration] = useState('')
+  const [detail, setDetail] = useState('')
+  // const [ editingInputs, setEditingInputs ] = useState({
+  //   name: '',
+  //   produce: '',
+  //   registration: '',
+  //   detail: '',
+  //   manager: ''
+  // })
 
   function getClass(index) {
     return index === activeObject?.id ? "active" : "inactive";
   }
 
+  function handleToggleEdit() {
+    setEditing(!editing)
+  }
+
+
+  // const { name, produce, registration, detail, manager } = editingInputs;
+  function handleChange(e) {
+  // const handleChange = e => {
+  //   const {name, value} = e.target
+  //   setEditingInputs({
+  //     [ name ]: value
+  //   })
+    setName({ [e.target.name]: e.target.value })
+    setProduce({ [e.target.name]: e.target.value })
+    setRegistration({ [e.target.name]: e.target.value })
+    setDetail({ [e.target.name]: e.target.value })
+  }
+
+
   // here className can not be "inactive" since Modal always shows activeObject
   // 여기서 className은 Modal이 항상 activeObject를 표시하기 때문에 "비활성"일 수 없습니다.
-  const Modal = ({ object: { id, productID, name, produce, registration, detail, manager, onRemove } }) => (
+  const Modal = ({ object: { id, productID, name, produce, registration, detail, manager, onRemove, onUpdate, onChange } }) => (
     <div id="productModal" className="active">
       <ModalBg></ModalBg>
       <CreateModal>
       <InnerModal>
       <NewTitle>제품 정보</NewTitle>
       <ul className='info_user'>
-        <InputBox>
-          <Title>제품ID : </Title>
-          <div className='inputstyle'>{productID}</div>
-        </InputBox>
-        <InputBox>
-          <Title>제품명 : </Title>
-          <div className='inputstyle'>{name}</div>
-        </InputBox>
-        <InputBox>
-          <Title>제조일자 : </Title>
-          <div className='inputstyle'>{produce}</div>
-        </InputBox>
-        <InputBox>
-          <Title>등록일자 : </Title>
-          <div className='inputstyle'>{registration}</div>
-        </InputBox>
-        <InputBox>
-          <Title>상세설명 : </Title>
-          <div className='inputstyle Textarea'>{detail}</div>
-        </InputBox>
-        <InputBox>
-          <Title>등록자 : </Title>
-          <div className='inputstyle'>{manager}</div>
-        </InputBox>
+        {
+          editing ? (
+            <>
+            <InputBox>
+              <Title>제품ID : </Title>
+              <div className='inputstyle'>{productID}</div>
+            </InputBox>
+            <InputBox>
+              <Title>제품명 : </Title>        
+              <div className='inputstyle'>
+                <input
+                  name='name' 
+                  onChange={setName('e.target.value')}
+                  value={name}
+                />
+                </div>
+            </InputBox>
+            <InputBox>
+              <Title>제조일자 : </Title>
+              <div className='inputstyle'>
+                <input
+                  name='produce' 
+                  onChange={(e) => {handleChange(e)}}
+                  value={produce}
+                />
+                </div>
+            </InputBox>
+            <InputBox>
+              <Title>등록일자 : </Title>
+              <div className='inputstyle'>
+                <input
+                  name='registration' 
+                  onChange={(e) => {handleChange(e)}}
+                  value={registration}
+                />
+                </div>
+            </InputBox>
+            <InputBox>
+              <Title>상세설명 : </Title>
+              <div className='inputstyle Textarea'>
+                <input
+                  name='detail' 
+                  onChange={(e) => {handleChange(e)}}
+                  value={detail}
+                />
+                </div>
+            </InputBox>
+            <InputBox>
+              <Title>등록자 : </Title>
+              <div className='inputstyle'>
+                <input
+                  name='manager' 
+                  onChange={(e) => {handleChange(e)}}
+                  value={manager}
+                />
+                </div>
+            </InputBox>
+            </>
+          ) : (
+            <>
+            <InputBox>
+              <Title>제품ID : </Title>
+              <div className='inputstyle'>{productID}</div>
+            </InputBox>
+            <InputBox>
+              <Title>제품명 : </Title>
+              <div className='inputstyle'>{name}</div>
+            </InputBox>
+            <InputBox>
+              <Title>제조일자 : </Title>
+              <div className='inputstyle'>{produce}</div>
+            </InputBox>
+            <InputBox>
+              <Title>등록일자 : </Title>
+              <div className='inputstyle'>{registration}</div>
+            </InputBox>
+            <InputBox>
+              <Title>상세설명 : </Title>
+              <div className='inputstyle Textarea'>{detail}</div>
+            </InputBox>
+            <InputBox>
+              <Title>등록자 : </Title>
+              <div className='inputstyle'>{manager}</div>
+            </InputBox>
+            </>
+          )
+        }
+        
+        
       </ul>
-      <Button style={{ left:0 }}>수정</Button>
+      <Button style={{ left:0 }} onClick={() => {handleToggleEdit()}}>
+        { editing ? '적용' : '수정' }
+      </Button>
+
       <Button className='removeBtn' onClick={() => {
         console.log('삭제 요청');
         console.log(id);
@@ -116,7 +216,8 @@ export default function UserList({ users, onRemove }) {
         onRemove(id)
         setShowModal(false)
         }}>삭제</Button>
-      <Button style={{ right:0 }} onClick={() => setShowModal(false)}>확인</Button>
+
+      <Button style={{ right:0 }} onClick={() => {setShowModal(false); setEditing(false)}}>확인</Button>
       </InnerModal>
       </CreateModal>
     </div>
@@ -127,12 +228,12 @@ export default function UserList({ users, onRemove }) {
   return (
     <>
       <ul className="list-menu">
-        {users.map(({ id, productID, name, produce, registration, detail, manager, onChange }) => (
+        {users.map(({ id, productID, name, produce, registration, detail, manager, onChange, onUpdate }) => (
           <li
             key={id}
             onClick={() => {
-              console.log(onRemove)
-              setActiveObject({ id, productID, name, produce, registration, detail, manager, onChange, onRemove });
+              // console.log(onRemove)
+              setActiveObject({ id, productID, name, produce, registration, detail, manager, onChange, onRemove, onUpdate });
               setShowModal(true);
             }}
             className={getClass(id)}
@@ -150,14 +251,6 @@ export default function UserList({ users, onRemove }) {
                   <Title>제조일자 : </Title>
                   <div className='inputstyle'>{produce}</div>
                 </li>
-
-                {/* <button 
-              // className='removeBtn' 
-              onClick={() => {
-                  onRemove(users.id)
-                  // setShowModal(false)
-                  }}>삭제</button> */}
-
                 <li>
                   <Title>등록일자 : </Title>
                   <div className='inputstyle'>{registration}</div>

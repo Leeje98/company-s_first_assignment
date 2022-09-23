@@ -114,15 +114,36 @@ export default function MainPage() {
 
     const onRemove = (id) => {
 
-      // const check = confirm('정말 삭제 하시겠습니까?')
+      if(window.confirm('해당 내용을 삭제 하시겠습니까?')) {
       // user.id 가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듬
       // = user.id 가 id 인 것을 제거함
-      // if(check) {
       setUsers(users.filter(user => user.id !== id))
-      console.log('삭제 기능 동작 확인')
-      console.log(id) 
-      // } 
+      console.log(`${id} 삭제완료`) 
+      alert('삭제되었습니다')
+      } 
     }
+
+
+
+    // const onUpdate = ( id, data ) => {
+    const handleUpdate = ( id, data ) => {
+      setUsers({
+        users: users.map(
+          users => {
+            if (users.id === id ) {
+              return {
+                id,
+                ...data
+              }
+            }
+            return users;
+          }
+        )
+      })
+    }
+
+    
+
 
     
     return (
@@ -149,7 +170,14 @@ export default function MainPage() {
           <div className='product_user'>
             <UserList 
               users={users} 
+              name={name}
+              produce={produce}
+              registration={registration} 
+              detail={detail}
+              manager={manager}
               onRemove={onRemove}
+              onUpdate={handleUpdate}
+              onChange={onChange}
             />
           </div>
         </section>
