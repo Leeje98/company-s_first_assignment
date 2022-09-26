@@ -126,17 +126,17 @@ export default function MainPage() {
 
 
     // const onUpdate = ( id, data ) => {
-    const handleUpdate = ( id, data ) => {
-      setUsers({
-        users: users.map(
-          users => {
-            if (users.id === id ) {
+    const handleUpdate = ( id, data ) => {  // 기준값 id, 어떻게 바꿀지 = data
+      setUsers({   // users의 배열 새로고침(상태관리)
+        users: users.map(     // 1. 맵으로 전체를 돌리며 체크한다
+          users => {          // 2. users 값을 파라미터로 가져와서
+            if (users.id === id ) {   // 3. 만약 users가 가지고 있는 id값이 파라미터가 가지고 있는 id값이랑 일치한다
               return {
-                id,
-                ...data
+                id,              // id 는 id 그대로 쓰고(기준값)
+                ...data,         // 여기에  productID, name, produce, ...등 각 요소의 값을 넣어준다
               }
             }
-            return users;
+            return users;  // 조건이 트루가 아니라면(배열이 변한게 없다면) 그대로 리턴한다
           }
         )
       })
@@ -149,6 +149,7 @@ export default function MainPage() {
     return (
       <>
       <div className='wrap'>
+        <div className='inner_wrap'>
         { modal === true ? 
         <CreateUser
           productID={productID}
@@ -181,6 +182,7 @@ export default function MainPage() {
             />
           </div>
         </section>
+      </div>
       </div>
       </>
     )

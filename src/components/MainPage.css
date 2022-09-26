@@ -7,8 +7,16 @@ li { list-style: none; }
 
 .wrap {
   width: calc( 100% - 40px);
+  margin: 0 auto;
   height: calc( 100vh - 40px);
   padding: 20px;
+}
+
+.inner_wrap {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 770px;
+  /* position: relative; */
 }
 
 .userTitle {

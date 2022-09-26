@@ -71,44 +71,83 @@ export default function UserList({ users, onRemove, onUpdate }) {
   const [activeObject, setActiveObject] = useState(null);      // 모달창에 들어갈 리스트 내용 요소
 
   const [editing, setEditing] = useState(false)                // 수정모드에 진입했는지 여부 (수정버튼 클릭 시)
-  const [name, setName] = useState('')
-  const [produce, setProduce] = useState('')
-  const [registration , setRegistration] = useState('')
-  const [detail, setDetail] = useState('')
-  // const [ editingInputs, setEditingInputs ] = useState({
-  //   name: '',
-  //   produce: '',
-  //   registration: '',
-  //   detail: '',
-  //   manager: ''
-  // })
+  // const [name, setName] = useState('')
+  // const [produce, setProduce] = useState('')
+  // const [registration , setRegistration] = useState('')
+  // const [detail, setDetail] = useState('')
+  const [ editingInputs, setEditingInputs ] = useState({
+    name: '',
+    produce: '',
+    registration: '',
+    detail: '',
+    manager: ''
+  })
 
   function getClass(index) {
     return index === activeObject?.id ? "active" : "inactive";
   }
 
-  function handleToggleEdit() {
+  function handleToggleEdit() {                     // 수정모드 진입여부를 컨트롤 (수정버튼 클릭 시)
+    // const { users, onUpdate } = props
+    if (editing) {
+      onUpdate(users.id, {                     
+        name: {name},
+        produce: {produce},
+        registration: {registration},
+        detail: {detail},
+        manager: {manager}
+      })
+      } else {
+        setEditingInputs( {
+          name: {name},
+          produce: {produce},
+          registration: {registration},
+          detail: {detail},
+          manager: {manager}
+        })
+      }
+    
     setEditing(!editing)
   }
 
+  
 
-  // const { name, produce, registration, detail, manager } = editingInputs;
-  function handleChange(e) {
-  // const handleChange = e => {
-  //   const {name, value} = e.target
-  //   setEditingInputs({
-  //     [ name ]: value
-  //   })
-    setName({ [e.target.name]: e.target.value })
-    setProduce({ [e.target.name]: e.target.value })
-    setRegistration({ [e.target.name]: e.target.value })
-    setDetail({ [e.target.name]: e.target.value })
+
+  const { name, produce, registration, detail, manager } = editingInputs;
+  // // function handleChange(e) {
+
+  const handleChange = (e) => {
+    const {name, value} = e.target
+    // setEditingInputs(pre => {
+    setActiveObject(pre => {
+      return {
+        ...pre,
+        [ name ]: value
+      }
+    })
   }
+
+    // setName({ [e.target.name]: e.target.value })
+    // setProduce({ [e.target.name]: e.target.value })
+    // setRegistration({ [e.target.name]: e.target.value })
+    // setDetail({ [e.target.name]: e.target.value })
+
+  // const [ name, setName ] = useState('')
+  // const [ produce, setProduce ] = useState('')
+
+  // function handleChange(e) {
+  //   setEditingInputs({
+  //     [e.target.name]: e.target.value
+  //   })
+  // }
+  
+  
 
 
   // here className can not be "inactive" since Modal always shows activeObject
   // 여기서 className은 Modal이 항상 activeObject를 표시하기 때문에 "비활성"일 수 없습니다.
   const Modal = ({ object: { id, productID, name, produce, registration, detail, manager, onRemove, onUpdate, onChange } }) => (
+    
     <div id="productModal" className="active">
       <ModalBg></ModalBg>
       <CreateModal>
@@ -116,9 +155,9 @@ export default function UserList({ users, onRemove, onUpdate }) {
       <NewTitle>제품 정보</NewTitle>
       <ul className='info_user'>
         {
-          editing ? (
-            <>
-            <InputBox>
+          editing ? (           // 수정 모드인가?
+            <>                  
+            <InputBox>          {/* 수정모드라면 value값이 들어간 곳이 input상태  */}
               <Title>제품ID : </Title>
               <div className='inputstyle'>{productID}</div>
             </InputBox>
@@ -127,7 +166,13 @@ export default function UserList({ users, onRemove, onUpdate }) {
               <div className='inputstyle'>
                 <input
                   name='name' 
-                  onChange={setName('e.target.value')}
+                  // onChange={setName(e.target.value)}
+                  // onChange={onChange}
+                  // onChange={handleChange(e)}
+                  // onChange={(e) => handleChange(e)}
+                  // onChange={handleChange()}
+                  // onChange={(e) => setEditingInputs(e.target.value)}
+                  onChange={handleChange}
                   value={name}
                 />
                 </div>
@@ -137,7 +182,8 @@ export default function UserList({ users, onRemove, onUpdate }) {
               <div className='inputstyle'>
                 <input
                   name='produce' 
-                  onChange={(e) => {handleChange(e)}}
+                  // onChange={(e) => {handleChange(e)}}
+                  onChange={handleChange}
                   value={produce}
                 />
                 </div>
@@ -147,7 +193,8 @@ export default function UserList({ users, onRemove, onUpdate }) {
               <div className='inputstyle'>
                 <input
                   name='registration' 
-                  onChange={(e) => {handleChange(e)}}
+                  // onChange={(e) => {handleChange(e)}}
+                  onChange={handleChange}
                   value={registration}
                 />
                 </div>
@@ -157,7 +204,8 @@ export default function UserList({ users, onRemove, onUpdate }) {
               <div className='inputstyle Textarea'>
                 <input
                   name='detail' 
-                  onChange={(e) => {handleChange(e)}}
+                  // onChange={(e) => {handleChange(e)}}
+                  onChange={handleChange}
                   value={detail}
                 />
                 </div>
@@ -167,14 +215,15 @@ export default function UserList({ users, onRemove, onUpdate }) {
               <div className='inputstyle'>
                 <input
                   name='manager' 
-                  onChange={(e) => {handleChange(e)}}
+                  // onChange={(e) => {handleChange(e)}}
+                  onChange={handleChange}
                   value={manager}
                 />
                 </div>
             </InputBox>
             </>
           ) : (
-            <>
+            <> {/* 수정모드가 맞다면 value값 부분 div표시 */}
             <InputBox>
               <Title>제품ID : </Title>
               <div className='inputstyle'>{productID}</div>
