@@ -159,10 +159,12 @@ export default function MainPage() {
           onClose={onClose}
         />
        : null }
-        <h1 className='userTitle'>제품 리스트</h1>
+       <div className='head'>
+       <h1 className='userTitle'>제품 리스트</h1>
         <button className='newBtn'
           onClick={()=>{setModal(true)}}
         >신규</button>
+       </div>
         <section className='userOuter'>
           <div className='product_user'>
             <UserList 
