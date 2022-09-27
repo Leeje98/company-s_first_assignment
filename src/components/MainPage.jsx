@@ -149,7 +149,7 @@ export default function MainPage() {
     return (
       <>
       <div className='wrap'>
-        <div className='inner_wrap'>
+        {/* <div className='inner_wrap'> */}
         { modal === true ? 
         <CreateUser
           productID={productID}
@@ -183,7 +183,7 @@ export default function MainPage() {
           </div>
         </section>
       </div>
-      </div>
+      {/* </div> */}
       </>
     )
 }
