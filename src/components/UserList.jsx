@@ -11,13 +11,10 @@ export default function UserList({ users, onRemove, onUpdate }) {
   
   const [showModal, setShowModal] = useState(false);           // 모달창이 보이고 안보이는 상태관리
   const [activeObject, setActiveObject] = useState(null);      // 모달창에 들어갈 리스트 내용 요소
-
+             //안들어가고있음
   const [editing, setEditing] = useState(false)                // 수정모드에 진입했는지 여부 (수정버튼 클릭 시)
-  // const [name, setName] = useState('')
-  // const [produce, setProduce] = useState('')
-  // const [registration , setRegistration] = useState('')
-  // const [detail, setDetail] = useState('')
-  const [ editingInputs, setEditingInputs ] = useState({
+
+  const [ editingInputs, setEditingInputs ] = useState({       // 수정값 반영 요소들
     name: '',
     produce: '',
     registration: '',
@@ -34,7 +31,7 @@ export default function UserList({ users, onRemove, onUpdate }) {
     // alert(JSON.stringify(data))
 
     
-    if (editing) {
+    if (editing) {                                              // 수정모드에서 저장 시
       onUpdate(data.id, { 
         name: data.name,
         produce: data.produce,
@@ -42,8 +39,8 @@ export default function UserList({ users, onRemove, onUpdate }) {
         detail: data.detail,
         manager: data.manager
       })
-      } else {
-        setEditingInputs( {
+      } else {                                                  // 보기모드에서 수정모드 집입 시
+        setEditingInputs({                                         
           name: data.name,
           produce: data.produce,
           registration: data.registration,
@@ -52,7 +49,7 @@ export default function UserList({ users, onRemove, onUpdate }) {
         })
       }
     
-    setEditing(!editing)
+    setEditing(!editing)                                         // 수정모드에 진입했는지를 판단하고 뒤집음 (버튼 글자 바뀜)     
   }
 
   
@@ -63,7 +60,6 @@ export default function UserList({ users, onRemove, onUpdate }) {
 
   const handleChange = (e) => {
     const {name, value} = e.target
-    // setEditingInputs(pre => {
     setActiveObject(pre => {
       return {
         ...pre,
@@ -72,10 +68,6 @@ export default function UserList({ users, onRemove, onUpdate }) {
     })
   }
 
-    // setName({ [e.target.name]: e.target.value })
-    // setProduce({ [e.target.name]: e.target.value })
-    // setRegistration({ [e.target.name]: e.target.value })
-    // setDetail({ [e.target.name]: e.target.value })
 
   // const [ name, setName ] = useState('')
   // const [ produce, setProduce ] = useState('')
@@ -123,7 +115,7 @@ export default function UserList({ users, onRemove, onUpdate }) {
           {
             editing ? (           // 수정 모드인가?
               <>                  
-              <div className='InputBox'>          {/* 수정모드라면 value값이 들어간 곳이 input상태  */}
+              <div className='InputBox'>          {/* 수정모드라면 value값들이 input상태  */}
                 <div className='Title'>제품ID : </div>
                 <div className='inputstyle'>{productID}</div>
               </div>
@@ -132,12 +124,6 @@ export default function UserList({ users, onRemove, onUpdate }) {
                 <div className='inputstyle'>
                   <input
                     name='name' 
-                    // onChange={setName(e.target.value)}
-                    // onChange={onChange}
-                    // onChange={handleChange(e)}
-                    // onChange={(e) => handleChange(e)}
-                    // onChange={handleChange()}
-                    // onChange={(e) => setEditingInputs(e.target.value)}
                     onChange={_handleChange}
                     value={editing.name}
                   />
@@ -148,7 +134,6 @@ export default function UserList({ users, onRemove, onUpdate }) {
                 <div className='inputstyle'>
                   <input
                     name='produce' 
-                    // onChange={(e) => {handleChange(e)}}
                     onChange={_handleChange}
                     value={editing.produce}
                   />
@@ -159,7 +144,6 @@ export default function UserList({ users, onRemove, onUpdate }) {
                 <div className='inputstyle'>
                   <input
                     name='registration' 
-                    // onChange={(e) => {handleChange(e)}}
                     onChange={_handleChange}
                     value={editing.registration}
                   />
@@ -170,7 +154,6 @@ export default function UserList({ users, onRemove, onUpdate }) {
                 <div className='inputstyle Textarea'>
                   <input
                     name='detail' 
-                    // onChange={(e) => {handleChange(e)}}
                     onChange={_handleChange}
                     value={editing.detail}
                   />
@@ -181,7 +164,6 @@ export default function UserList({ users, onRemove, onUpdate }) {
                 <div className='inputstyle'>
                   <input
                     name='manager' 
-                    // onChange={(e) => {handleChange(e)}}
                     onChange={_handleChange}
                     value={editing.manager}
                   />
@@ -189,7 +171,7 @@ export default function UserList({ users, onRemove, onUpdate }) {
               </div>
               </>
             ) : (
-              <> {/* 수정모드가 맞다면 value값 부분 div표시 */}
+              <> {/* 수정모드가 아니라면 value값 부분 div표시 */}
               <div className='InputBox'>
                 <div className='Title'>제품ID : </div>
                 <div className='inputstyle'>{productID}</div>
@@ -369,12 +351,12 @@ export default function UserList({ users, onRemove, onUpdate }) {
   //     </div>
   //   </div>
   // );
-    /////
 
 
   return (
     <>
-      <ul className="list-menu">
+      <div className="list-menu">
+      {/* <div> */}
         {users.map(({ id, productID, name, produce, registration, detail, manager, onChange, onUpdate }) => (
           <li
             key={id}
@@ -406,13 +388,8 @@ export default function UserList({ users, onRemove, onUpdate }) {
               </ul>
             </li>
         ))}
-      </ul>
+      </div>
       {showModal ? <Modal object={activeObject} onAccept={handleToggleEdit} /> : null}
-      {/* <ul className="list-menu">
-        {users.map((user) => (
-          <User user={user} key={user.id} />
-        ))}
-      </ul> */}
     </>
   )
 }
