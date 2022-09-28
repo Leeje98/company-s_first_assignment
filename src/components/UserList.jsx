@@ -102,13 +102,13 @@ export default function UserList({ users, onRemove, onUpdate }) {
   const Modal = ({ object: { id, productID, name, produce, registration, detail, manager, onRemove, onUpdate, onChange, handleToggleEdit }, onAccept }) => {
 
     const [ editing, setEditing ] = useState({
-      // id: id,
-      // productID: productID,
-      // name: name,
-      // produce: produce,
-      // registration: registration,
-      // detail: detail,
-      // manager: manager
+      id: id,
+      productID: productID,
+      name: name,
+      produce: produce,
+      registration: registration,
+      detail: detail,
+      manager: manager
     })
 
     const handleChange = (e) => {
@@ -195,14 +195,14 @@ export default function UserList({ users, onRemove, onUpdate }) {
                   <input
                     name='manager' 
                     onChange={_handleChange}
-                    // onBlur={handleChange}
+                    onBlur={handleChange}
                     value={editing.manager}
                   />
                   </div>
               </div>
               </>
             ) : (
-              <> {/* 수정모드가 아니라면 value값 부분 div표시 */}
+              <>                                     {/* 수정모드가 아니라면 value값 부분 div표시 */}
               <div className='InputBox'>
                 <div className='Title'>제품ID : </div>
                 <div className='inputstyle'>{productID}</div>
