@@ -122,7 +122,7 @@ export default function MainPage() {
       alert('삭제되었습니다')
       } 
     }
-
+  
 
 
     const handleUpdate = ( id, data ) => {  // 기준값 id, 어떻게 바꿀지 = data

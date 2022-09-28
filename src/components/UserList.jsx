@@ -28,6 +28,16 @@ export default function UserList({ users, onRemove, onUpdate }) {
     return index === activeObject?.id ? "active" : "inactive";
   }
 
+  // function handleChange(e) {
+  //   const {name, value} = e.target
+  //   setActiveObject(pre => {
+  //     return {
+  //       ...pre,
+  //       [ name ]: value
+  //     }
+  //   })
+  // }
+
   function handleToggleEdit(event, data ) {                     // 수정모드 진입여부를 컨트롤 (수정버튼 클릭 시)
 
     // alert(JSON.stringify(data))
@@ -42,7 +52,7 @@ export default function UserList({ users, onRemove, onUpdate }) {
           detail: data.detail,
           manager: data.manager
         })
-        handleChange(event, data)
+        // handleChange(event, data)
       } else {                                                  // 보기모드에서 수정모드 집입 시
         setEditingInputs({      
           productID: data.productID,                                   
@@ -62,15 +72,15 @@ export default function UserList({ users, onRemove, onUpdate }) {
 
   const { name, produce, registration, detail, manager } = editingInputs;
 
-  function handleChange(e) {
-    const {name, value} = e.target
-    setActiveObject(pre => {
-      return {
-        ...pre,
-        [ name ]: value
-      }
-    })
-  }
+  // function handleChange(e) {
+  //   const {name, value} = e.target
+  //   setActiveObject(pre => {
+  //     return {
+  //       ...pre,
+  //       [ name ]: value
+  //     }
+  //   })
+  // }
 
   
   // const handleChange = (e) => {
@@ -92,13 +102,13 @@ export default function UserList({ users, onRemove, onUpdate }) {
   const Modal = ({ object: { id, productID, name, produce, registration, detail, manager, onRemove, onUpdate, onChange, handleToggleEdit }, onAccept }) => {
 
     const [ editing, setEditing ] = useState({
-      id: id,
-      productID: productID,
-      name: name,
-      produce: produce,
-      registration: registration,
-      detail: detail,
-      manager: manager
+      // id: id,
+      // productID: productID,
+      // name: name,
+      // produce: produce,
+      // registration: registration,
+      // detail: detail,
+      // manager: manager
     })
 
     const handleChange = (e) => {
@@ -119,7 +129,7 @@ export default function UserList({ users, onRemove, onUpdate }) {
           [ name ]: value
         }
       })
-    }
+    }    
 
     return (
       <div id="productModal" className="active">
@@ -141,6 +151,7 @@ export default function UserList({ users, onRemove, onUpdate }) {
                   <input
                     name='name' 
                     onChange={_handleChange}
+                    // onBlur={handleChange}
                     value={editing.name}
                   />
                   </div>
@@ -151,6 +162,7 @@ export default function UserList({ users, onRemove, onUpdate }) {
                   <input
                     name='produce' 
                     onChange={_handleChange}
+                    // onBlur={handleChange}
                     value={editing.produce}
                   />
                   </div>
@@ -161,6 +173,7 @@ export default function UserList({ users, onRemove, onUpdate }) {
                   <input
                     name='registration' 
                     onChange={_handleChange}
+                    // onBlur={handleChange}
                     value={editing.registration}
                   />
                   </div>
@@ -171,6 +184,7 @@ export default function UserList({ users, onRemove, onUpdate }) {
                   <textarea
                     name='detail' 
                     onChange={_handleChange}
+                    // onBlur={handleChange}
                     value={editing.detail}
                   />
                   </div>
@@ -181,6 +195,7 @@ export default function UserList({ users, onRemove, onUpdate }) {
                   <input
                     name='manager' 
                     onChange={_handleChange}
+                    // onBlur={handleChange}
                     value={editing.manager}
                   />
                   </div>
@@ -199,19 +214,19 @@ export default function UserList({ users, onRemove, onUpdate }) {
               </div>
               <div className='InputBox'>
                 <div className='Title'>제조일자 : </div>
-                <div className='inputstyle'>{produce}</div>
+                <div className='inputstyle'>{editing.produce}</div>
               </div>
               <div className='InputBox'>
                 <div className='Title'>등록일자 : </div>
-                <div className='inputstyle'>{registration}</div>
+                <div className='inputstyle'>{editing.registration}</div>
               </div>
               <div className='InputBox'>
                 <div className='Title'>상세설명 : </div>
-                <div className='inputstyle Textarea'>{detail}</div>
+                <div className='inputstyle Textarea'>{editing.detail}</div>
               </div>
               <div className='InputBox'>
                 <div className='Title'>등록자 : </div>
-                <div className='inputstyle'>{manager}</div>
+                <div className='inputstyle'>{editing.manager}</div>
               </div>
               </>
             )
