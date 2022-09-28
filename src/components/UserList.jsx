@@ -43,7 +43,20 @@ export default function UserList({ users, onRemove, onUpdate }) {
     // alert(JSON.stringify(data))
     // setEditing(!editing)                                         // 수정모드에 진입했는지를 판단하고 뒤집음 (버튼 글자 바뀜)     
     
-    if (editingMode) {                                              // 수정모드에서 저장 시
+    if (editingMode) {     // 수정모드에서 저장 시
+
+      const Date = /^(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/
+      const IdCk = /^(?=.*?[A-Z])(?=.*?[0-9]).{12,12}$/
+
+      if((data.productID) === '' || (data.name) === '' ) {
+        alert('제품ID와 제품명은 필수 입력입니다')
+      } else if( !IdCk.test(data.productID)){
+        alert('제품ID를 올바르게 입력해주세요 \n(숫자, 영어 대문자 조합 12자리)')
+      } else if( !Date.test(data.produce) && (data.produce !== '') ) {
+        alert('날짜를 형식에 맞게 입력해주세요')
+      } else if( !Date.test(data.registration) && (data.registration !== '') ) {
+        alert('등록일자를 형식에 맞게 입력해주세요')
+      } else {
         onUpdate(data.id, { 
           productID: data.productID,
           name: data.name,
@@ -52,19 +65,32 @@ export default function UserList({ users, onRemove, onUpdate }) {
           detail: data.detail,
           manager: data.manager
         })
-        // handleChange(event, data)
-      } else {                                                  // 보기모드에서 수정모드 집입 시
-        setEditingInputs({      
-          productID: data.productID,                                   
+        setActiveObject(pre => ({ 
+          id: data.id,
+          productID: data.productID,
           name: data.name,
           produce: data.produce,
           registration: data.registration,
           detail: data.detail,
           manager: data.manager
-        })
+        }))
+        // handleChange(event, data)
+        alert('수정되었습니다') 
+        setEditingMode(!editingMode)        
       }
+    } else {                                                  // 보기모드에서 수정모드 집입 시
+      setEditingInputs({      
+        productID: data.productID,                                   
+        name: data.name,
+        produce: data.produce,
+        registration: data.registration,
+        detail: data.detail,
+        manager: data.manager
+      })
+      setEditingMode(!editingMode)        
+    }
     
-    setEditingMode(!editingMode)                                         // 수정모드에 진입했는지를 판단하고 뒤집음 (버튼 글자 바뀜)     
+    // setEditingMode(!editingMode)                          // 수정모드에 진입했는지를 판단하고 뒤집음 (버튼 글자 바뀜)     
   }
 
   
@@ -111,15 +137,15 @@ export default function UserList({ users, onRemove, onUpdate }) {
       manager: manager
     })
 
-    const handleChange = (e) => {
-      const {name, value} = e.target
-      setActiveObject(pre => {
-        return {
-          ...pre,
-          [ name ]: value
-        }
-      })
-    }
+    // const handleChange = (e) => {
+    //   const {name, value} = e.target
+    //   setActiveObject(pre => {
+    //     return {
+    //       ...pre,
+    //       [ name ]: value
+    //     }
+    //   })
+    // }
 
     const _handleChange = (e) => {
       const {name, value} = e.target
@@ -195,7 +221,7 @@ export default function UserList({ users, onRemove, onUpdate }) {
                   <input
                     name='manager' 
                     onChange={_handleChange}
-                    onBlur={handleChange}
+                    // onBlur={handleChange}
                     value={editing.manager}
                   />
                   </div>
@@ -209,7 +235,6 @@ export default function UserList({ users, onRemove, onUpdate }) {
               </div>
               <div className='InputBox'>
                 <div className='Title'>제품명 : </div>
-                {/* <div className='inputstyle'>{name}</div> */}
                 <div className='inputstyle'>{editing.name}</div>
               </div>
               <div className='InputBox'>
