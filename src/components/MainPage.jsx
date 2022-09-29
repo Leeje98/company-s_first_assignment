@@ -177,6 +177,9 @@ export default function MainPage() {
               onRemove={onRemove}
               onUpdate={handleUpdate}
               onChange={onChange}
+              // 전달 props명(자식컴포넌트에서 받아서 이용함) = {현재(부모)컴포넌트의 오브젝트 name}
+              // 이벤트 종류 = {현재(부모)컴포넌트에서 선언한 함수명}
+              //-- 자식 컴포넌트에게 속성 전달(상속)
             />
           </div>
         </section>

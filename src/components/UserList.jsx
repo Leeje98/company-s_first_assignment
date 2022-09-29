@@ -46,16 +46,13 @@ export default function UserList({ users, onRemove, onUpdate }) {
     if (editingMode) {     // 수정모드에서 저장 시
 
       const Date = /^(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$/
-      const IdCk = /^(?=.*?[A-Z])(?=.*?[0-9]).{12,12}$/
 
-      if((data.productID) === '' || (data.name) === '' ) {
-        alert('제품ID와 제품명은 필수 입력입니다')
-      } else if( !IdCk.test(data.productID)){
-        alert('제품ID를 올바르게 입력해주세요 \n(숫자, 영어 대문자 조합 12자리)')
+      if((data.name) === '' ) {
+        alert('제품명은 필수 입력입니다')
       } else if( !Date.test(data.produce) && (data.produce !== '') ) {
         alert('날짜를 형식에 맞게 입력해주세요')
       } else if( !Date.test(data.registration) && (data.registration !== '') ) {
-        alert('등록일자를 형식에 맞게 입력해주세요')
+        alert('날짜를 형식에 맞게 입력해주세요')
       } else {
         onUpdate(data.id, { 
           productID: data.productID,
@@ -66,7 +63,8 @@ export default function UserList({ users, onRemove, onUpdate }) {
           manager: data.manager
         })
         setActiveObject(pre => ({ 
-          id: data.id,
+          ...pre,
+          // id: data.id,
           productID: data.productID,
           name: data.name,
           produce: data.produce,
@@ -125,7 +123,7 @@ export default function UserList({ users, onRemove, onUpdate }) {
 
   // here className can not be "inactive" since Modal always shows activeObject
   // 여기서 className은 Modal이 항상 activeObject를 표시하기 때문에 "비활성"일 수 없습니다.
-  const Modal = ({ object: { id, productID, name, produce, registration, detail, manager, onRemove, onUpdate, onChange, handleToggleEdit }, onAccept }) => {
+  const Modal = ({ object: { id, productID, name, produce, registration, detail, manager, onRemove }, onAccept }) => {
 
     const [ editing, setEditing ] = useState({
       id: id,
@@ -188,6 +186,7 @@ export default function UserList({ users, onRemove, onUpdate }) {
                   <input
                     name='produce' 
                     onChange={_handleChange}
+                    placeholder='yyyy-mm-dd'
                     // onBlur={handleChange}
                     value={editing.produce}
                   />
@@ -199,6 +198,7 @@ export default function UserList({ users, onRemove, onUpdate }) {
                   <input
                     name='registration' 
                     onChange={_handleChange}
+                    placeholder='yyyy-mm-dd'
                     // onBlur={handleChange}
                     value={editing.registration}
                   />
